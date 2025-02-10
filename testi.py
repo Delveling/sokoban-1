@@ -41,8 +41,48 @@ def pilko(lahde): # pilkkoo kuvan 3x3 osiin
             osat.append(osa)
     return osat
 
+def luo_naapurit(syote): # luo naapurit jokaiselle osalle
+    osat = {}
+    ala = (((0,1),(0,0)),((1,1),(1,0)),((2,1),(2,0)),((0,2),(0,1)),((1,2),(1,1)),((2,2),(1,2)))
+    yla = (((0,0),(0,1)),((1,0),(1,1)),((2,0),(2,1)),((0,1),(0,2)),((1,1),(1,2)),((2,1),(2,2)))
+    vasen = (((0,0),(1,0)),((1,0),(2,0)),((0,1),(1,1)),((1,1),(2,1)),((0,2),(1,2)),((1,2),(2,2)))
+    oikea = (((1,0),(0,0)),((2,0),(1,0)),((1,1),(0,1)),((2,1),(1,1)),((1,2),(0,2)),((2,2),(1,2)))
+    for i in range(len(syote)):
+        osat[i] = {"yla": [], "ala": [], "vasen": [], "oikea": []}
+        for j in range(len(syote)):    
+            osat[i]["yla"].append(j)
+            osat[i]["ala"].append(j)
+            osat[i]["vasen"].append(j)
+            osat[i]["oikea"].append(j)
+
+
+    for i in range(len(syote)):
+        for j in range(len(syote)):
+            if not on_sama(syote[i].subsurface(0, 1, 3, 2), syote[j].subsurface(0, 0, 3, 2)):
+                osat[i]["ala"].remove(j)
+            if not on_sama(syote[i].subsurface(0, 0, 2, 3), syote[j].subsurface(1, 0, 2, 3)):
+                osat[i]["vasen"].remove(j)
+            if not on_sama(syote[i].subsurface(1, 0, 2, 3), syote[j].subsurface(0, 0, 2, 3)):
+                osat[i]["oikea"].remove(j)
+            if not on_sama(syote[i].subsurface(0, 0, 3, 2), syote[j].subsurface(0, 1, 3, 2)):
+                osat[i]["yla"].remove(j)
+     
+    return osat
+
+def on_sama(kuva1, kuva2):
+    for y in range(kuva1.get_height()):
+        for x in range(kuva1.get_width()):
+            if kuva1.get_at((x, y)) != kuva2.get_at((x, y)):
+                return False
+    return True
+
 
 osat = pilko(box)
+lista = luo_naapurit(osat)
+print(on_sama(osat[0], osat[0]))
+print(lista[9])
+
+
 koko = leveys//box.get_width()/3
 naytto.fill((255, 255, 255))
 for i in range(len(osat)):
