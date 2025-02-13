@@ -2,13 +2,25 @@ import pygame
 from random import randint,choice
 
 class Solu:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self, xy: tuple):
+        self.xy = xy
         self.naapurit = []
         self.osat = []
-        self.vari = (randint(0, 255), randint(0, 255), randint(0, 255))
         self.kayty = False
+
+    def lisaa_naapuri(self, naapurixy: tuple):
+        self.naapurit.append(naapurixy)
+    
+    def lisaa_osat(self, osat: list):
+        self.osat = osat
+    
+
+class osa:
+    def __init__(self):
+        self.yla = yla
+        self.ala = ala
+        self.vasen = vasen
+        self.oikea = oikea    
 
 
 
@@ -43,10 +55,7 @@ def pilko(lahde): # pilkkoo kuvan 3x3 osiin
 
 def luo_naapurit(syote): # luo naapurit jokaiselle osalle
     osat = {}
-    ala = (((0,1),(0,0)),((1,1),(1,0)),((2,1),(2,0)),((0,2),(0,1)),((1,2),(1,1)),((2,2),(1,2)))
-    yla = (((0,0),(0,1)),((1,0),(1,1)),((2,0),(2,1)),((0,1),(0,2)),((1,1),(1,2)),((2,1),(2,2)))
-    vasen = (((0,0),(1,0)),((1,0),(2,0)),((0,1),(1,1)),((1,1),(2,1)),((0,2),(1,2)),((1,2),(2,2)))
-    oikea = (((1,0),(0,0)),((2,0),(1,0)),((1,1),(0,1)),((2,1),(1,1)),((1,2),(0,2)),((2,2),(1,2)))
+    
     for i in range(len(syote)):
         osat[i] = {"yla": [], "ala": [], "vasen": [], "oikea": []}
         for j in range(len(syote)):    
@@ -80,7 +89,8 @@ def on_sama(kuva1, kuva2):
 osat = pilko(box)
 lista = luo_naapurit(osat)
 print(on_sama(osat[0], osat[0]))
-print(lista[9])
+print(lista[40])
+print(list(range(0,10)))
 
 
 koko = leveys//box.get_width()/3
